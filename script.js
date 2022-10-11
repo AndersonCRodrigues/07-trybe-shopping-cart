@@ -1,6 +1,5 @@
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições!
-
 // Fique a vontade para modificar o código já escrito e criar suas próprias funções!
 
 /**
@@ -68,19 +67,36 @@ const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
-  li.addEventListener('click', cartItemClickListener);
+  // li.addEventListener('click', cartItemClickListener);
   return li;
 };
 
-const carregaFetch = async () => {
+const loadCartFetch = async (prodId) => {
+  const cartItems = document.querySelector('.cart__items');
+  const prod = createCartItemElement(await fetchItem(prodId));
+  cartItems.appendChild(prod);
+};
+
+function getIdEvent(btns) {
+  for (let i = 0; i < btns.length; i += 1) {
+    btns[i].addEventListener('click', async (e) => {
+      const id = (e.target.parentNode.firstChild.innerText);
+      loadCartFetch(id);
+    });
+  }
+}
+
+const loadFetch = async () => {
   const { results } = await fetchProducts('computador');
-  console.log(results);
   const items = document.querySelector('.items');
   results.forEach((product) => {
-    items.appendChild(createProductItemElement(product));
+  items.appendChild(createProductItemElement(product));
   });
+
+  const itemBtn = document.querySelectorAll('.item__add');
+  getIdEvent(itemBtn);
 };
 
 window.onload = () => {
-  carregaFetch();
+  loadFetch();
 };

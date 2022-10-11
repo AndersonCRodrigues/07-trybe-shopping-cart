@@ -9,14 +9,14 @@ describe('3 - Teste a função saveCartItems', () => {
   // fail('Teste vazio');
   test('Teste se, ao executar saveCartItems com um cartItem como argumento, o método localStorage.setItem é chamado', () => {
     expect.assertions(1);
-    saveCartItems(cartItem);
-    expect(localStorage).toHaveBeenCalled();
+    saveCartItems('cartItem');
+    expect(localStorage.setItem).toHaveBeenCalled();
   });
   test('Teste se, ao executar saveCartItems com um cartItem como argumento, o método localStorage.setItem é chamado com dois parâmetros, sendo o primeiro a chave "cartItems" e o segundo sendo o valor passado como argumento para saveCartItems', () => {
     expect.assertions(1);
-    saveCartItems(cartItem);
+    saveCartItems('cartItem');
     const key = 'cartItems';
-    const value = 'saveCartItems';
+    const value = 'cartItem';
     expect(localStorage.setItem).toHaveBeenLastCalledWith(key, value);
   });
 });

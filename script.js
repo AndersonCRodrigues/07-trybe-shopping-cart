@@ -97,6 +97,14 @@ const loadFetch = async () => {
   getIdEvent(itemBtn);
 };
 
+const removeItemCart = () => {
+  const cartItems = document.querySelector('.cart__items');
+  cartItems.addEventListener('click', (e) => {
+    cartItems.removeChild(e.target);
+  });
+};
+
 window.onload = () => {
   loadFetch();
+  removeItemCart();
 };

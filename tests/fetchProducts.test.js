@@ -18,11 +18,12 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(fetch).toHaveBeenCalledWith(url);
   });
   test('verifica se fetchProducts() retorna erro "You must provide an url"', async () => {
-    expect.assertions(1);
-    try{
+    // expect.assertions(1);
+    const result = new Error('You must provide an url');
+    try {
       await fetchProducts();
     } catch(error) {
-      expect(error).toEqual(new Error('You must provide an url'));
+      expect(error).toEqual(result);
     }
   });
 });

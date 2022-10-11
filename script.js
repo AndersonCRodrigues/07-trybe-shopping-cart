@@ -1,5 +1,5 @@
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
-// experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições! 
+// experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições!
 
 // Fique a vontade para modificar o código já escrito e criar suas próprias funções!
 
@@ -31,7 +31,7 @@ const createCustomElement = (element, className, innerText) => {
 
 /**
  * Função responsável por criar e retornar o elemento do produto.
- * @param {Object} product - Objeto do produto. 
+ * @param {Object} product - Objeto do produto.
  * @param {string} product.id - ID do produto.
  * @param {string} product.title - Título do produto.
  * @param {string} product.thumbnail - URL da imagem do produto.
@@ -72,4 +72,15 @@ const createCartItemElement = ({ id, title, price }) => {
   return li;
 };
 
-window.onload = () => { };
+const carregaFetch = async () => {
+  const { results } = await fetchProducts('computador');
+  console.log(results);
+  const items = document.querySelector('.items');
+  results.forEach((product) => {
+    items.appendChild(createProductItemElement(product));
+  });
+};
+
+window.onload = () => {
+  carregaFetch();
+};

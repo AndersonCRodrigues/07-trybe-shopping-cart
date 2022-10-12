@@ -85,7 +85,7 @@ function totalPrice() {
   for (let i = 0; i < cartItems.children.length; i += 1) {
     value += Number.parseFloat(cartItems.children[i].dataset.price, 10);
   }
-  total.innerHTML = value.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
+  total.innerHTML = value;
 }
 
 cartBtn.addEventListener('click', () => {
@@ -137,6 +137,7 @@ const loadFetch = async () => {
   loadedFetchItems();
   const itemBtn = document.querySelectorAll('.item__add');
   getIdEvent(itemBtn);
+  totalPrice();
 };
 
 loadingFetchItems();
@@ -144,5 +145,4 @@ loadingFetchItems();
 window.onload = () => {
   loadFetch();
   cartItems.innerHTML = getSavedCartItems();
-  totalPrice();
 };

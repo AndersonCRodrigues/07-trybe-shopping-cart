@@ -1,6 +1,7 @@
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições!
 // Fique a vontade para modificar o código já escrito e criar suas próprias funções!
+const cartItems = document.querySelector('.cart__items');
 
 /**
  * Função responsável por criar e retornar o elemento de imagem do produto.
@@ -65,22 +66,24 @@ const getIdFromProductItem = (product) => product.querySelector('span.id').inner
  */
 
  function cartItemClickListener(e) {
-  const cartItems = document.querySelector('.cart__items');
   cartItems.removeChild(e.target);
+  saveCartItems(cartItems.innerHTML);
 }
+
+cartItems.addEventListener('click', cartItemClickListener);
 
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
-  li.addEventListener('click', cartItemClickListener);
+  // li.addEventListener('click', cartItemClickListener);
   return li;
 };
 
 const loadCartFetch = async (prodId) => {
-  const cartItems = document.querySelector('.cart__items');
   const prod = createCartItemElement(await fetchItem(prodId));
   cartItems.appendChild(prod);
+  saveCartItems(cartItems.innerHTML);
 };
 
 function getIdEvent(btns) {
@@ -105,4 +108,5 @@ const loadFetch = async () => {
 
 window.onload = () => {
   loadFetch();
+  cartItems.innerHTML = getSavedCartItems();
 };

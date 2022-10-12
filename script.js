@@ -64,9 +64,18 @@ const getIdFromProductItem = (product) => product.querySelector('span.id').inner
  * @param {string} product.price - Preço do produto.
  * @returns {Element} Elemento de um item do carrinho.
  */
+ async function totalPrice() {
+  const total = document.querySelector('.total-price');
+  let value = 0;
+  for (let i = 0; i < cartItems.children.length; i += 1) {
+    value += Number.parseFloat(cartItems.children[i].dataset.price, 10);
+  }
+  total.innerHTML = value.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
+}
 
  function cartItemClickListener(e) {
   cartItems.removeChild(e.target);
+  totalPrice();
   saveCartItems(cartItems.innerHTML);
 }
 
@@ -75,6 +84,7 @@ cartItems.addEventListener('click', cartItemClickListener);
 const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
+  li.dataset.price = price;
   li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
   // li.addEventListener('click', cartItemClickListener);
   return li;
@@ -84,6 +94,8 @@ const loadCartFetch = async (prodId) => {
   const prod = createCartItemElement(await fetchItem(prodId));
   cartItems.appendChild(prod);
   saveCartItems(cartItems.innerHTML);
+  totalPrice();
+  // console.log(cartItems.children.length);
 };
 
 function getIdEvent(btns) {
@@ -109,4 +121,5 @@ const loadFetch = async () => {
 window.onload = () => {
   loadFetch();
   cartItems.innerHTML = getSavedCartItems();
+  totalPrice();
 };

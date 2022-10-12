@@ -16,6 +16,20 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
+function loadingFetchItems() {
+  const items = document.querySelector('.items');
+  const load = document.createElement('span');
+  load.className = 'loading';
+  load.innerText = 'carregando...';
+  items.appendChild(load);
+}
+
+function loadedFetchItems() {
+  const items = document.querySelector('.items');
+  const load = document.querySelector('.loading');
+  items.removeChild(load);
+}
+
 /**
  * Função responsável por criar e retornar qualquer elemento.
  * @param {string} element - Nome do elemento a ser criado.
@@ -120,10 +134,12 @@ const loadFetch = async () => {
   results.forEach((product) => {
   items.appendChild(createProductItemElement(product));
   });
-
+  loadedFetchItems();
   const itemBtn = document.querySelectorAll('.item__add');
   getIdEvent(itemBtn);
 };
+
+loadingFetchItems();
 
 window.onload = () => {
   loadFetch();

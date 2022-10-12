@@ -2,6 +2,7 @@
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições!
 // Fique a vontade para modificar o código já escrito e criar suas próprias funções!
 const cartItems = document.querySelector('.cart__items');
+const cartBtn = document.querySelector('.empty-cart');
 
 /**
  * Função responsável por criar e retornar o elemento de imagem do produto.
@@ -64,7 +65,7 @@ const getIdFromProductItem = (product) => product.querySelector('span.id').inner
  * @param {string} product.price - Preço do produto.
  * @returns {Element} Elemento de um item do carrinho.
  */
- async function totalPrice() {
+function totalPrice() {
   const total = document.querySelector('.total-price');
   let value = 0;
   for (let i = 0; i < cartItems.children.length; i += 1) {
@@ -72,6 +73,12 @@ const getIdFromProductItem = (product) => product.querySelector('span.id').inner
   }
   total.innerHTML = value.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
 }
+
+cartBtn.addEventListener('click', () => {
+  cartItems.innerHTML = '';
+  saveCartItems(cartItems.innerHTML);
+  totalPrice();
+});
 
  function cartItemClickListener(e) {
   cartItems.removeChild(e.target);
